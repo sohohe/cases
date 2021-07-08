@@ -1,0 +1,206 @@
+import requests
+import json
+import random
+# portfolioId = 8   leadproviderId =1 Token= 0F1EBFA2479F5047; leadproviderId =3  Token= 7CA81ED5213708AE;
+# leadproviderId =4  Token= 5AB9836F686522FF; leadproviderId =5  Token= E00E2B93744242A8; leadproviderId =6  Token= 6C4E7409AE2FA7FD;
+#leadproviderId =7  Token= 800B615891048FF6; leadproviderId =8  Token= 4E3159A9CAA815F4;  leadproviderId =9  Token= A89A3FE27366103D;
+# leadproviderId =10  Token= 32093CE6A760FE9B; leadproviderId =11  Token= 88030F0866240C70;  leadproviderId =12  Token= 2159EAB4F02FFDA6;
+# leadproviderId =13  Token= 7C45296975CDB4E4;  leadproviderId =14  Token= 055A16CBE2B4BEB6;  leadproviderId =15  Token= 5F3F960EA9651FAA;
+# leadproviderId =16  Token= 60F9371519CB442E;  leadproviderId =17  Token= 0766E70FCAF32E48;  leadproviderId =18  Token= 5A8D852C5F83A745;
+# leadproviderId =19  Token= B0CD6FCF821BB955;
+
+# portfolioId = 3   leadproviderId =1 Token= 6AF3C6640ACC6E4E; leadproviderId =3 Token= 32DABE9A65804B3B; leadproviderId =4 Token= A62AD5CB70116898;
+# leadproviderId =5 Token= 86A2C4C58B49F337; leadproviderId =6 Token= 4BF38088FD0D7D6A; leadproviderId =7 Token= EFE7223379EAF789;
+# leadproviderId =8 Token= B4C96816A9EC6593; leadproviderId =9 Token= 71D9E6FE0F90F4A4; leadproviderId =10 Token= 58346C25F5C9AF20;
+
+def Sendleads(portfolio):
+    path ={8:'0F1EBFA2479F5047',3:'6AF3C6640ACC6E4E'}
+    url ='http://FRAMEWORK-GATEWAY-SERVER-DEV-V3-2.us-west-1.elasticbeanstalk.com:8910/platform-lfsapi-old/api/lead/'+path[portfolio]
+    data ='<?xml version="1.0" encoding="UTF-8"?>' \
+'<REQUEST>' \
+    '<REFERRAL>' \
+        '<STOREKEY>543</STOREKEY>' \
+        '<REFURL>https://www.fast5kloans.com</REFURL>' \
+        '<IPADDRESS>70.114.69.116</IPADDRESS>' \
+        '<TIERKEY/>' \
+        '<AFFID>562451212</AFFID>' \
+        '<SUBID>728124</SUBID>' \
+        '<TEST>false</TEST>' \
+    '</REFERRAL>' \
+    '<CUSTOMER>' \
+        '<PERSONAL>' \
+            '<REQUESTEDAMOUNT>800</REQUESTEDAMOUNT>' \
+            '<SSN>568521254</SSN>' \
+            '<DOB>1996-06-03</DOB>' \
+            '<GENDER>U</GENDER>' \
+            '<FIRSTNAME>Michggg</FIRSTNAME>' \
+            '<LASTNAME>Edmgfhd</LASTNAME>' \
+            '<ADDRESS>906 Appleblogfger Ln</ADDRESS>' \
+            '<CITY>MESQUITE</CITY>' \
+            '<STATE>TX</STATE>' \
+            '<ZIP>75149</ZIP>' \
+            '<HOMEPHONE>8021254511</HOMEPHONE>' \
+            '<OTHERPHONE>8026512251</OTHERPHONE>' \
+            '<DLSTATE>TX</DLSTATE>' \
+            '<DLNUMBER>44101902</DLNUMBER>' \
+            '<CONTACTTIME>A</CONTACTTIME>' \
+            '<ADDRESSMONTHS>0</ADDRESSMONTHS>187' \
+            '<ADDRESSYEARS>1</ADDRESSYEARS>' \
+            '<RENTOROWN>R</RENTOROWN>' \
+            '<ISMILITARY>false</ISMILITARY>' \
+            '<ISCITIZEN>true</ISCITIZEN>' \
+            '<OTHEROFFERS>false</OTHEROFFERS>' \
+            '<EMAIL>soho5355547@sztus.com</EMAIL>' \
+        '</PERSONAL>' \
+        '<EMPLOYMENT>' \
+            '<INCOMETYPE>E</INCOMETYPE>' \
+            '<PAYTYPE>D</PAYTYPE>' \
+            '<EMPMONTHS>0</EMPMONTHS>' \
+            '<EMPYEARS>1</EMPYEARS>' \
+            '<EMPNAME>Acme health care</EMPNAME>' \
+            '<EMPADDRESS/>' \
+            '<EMPADDRESS2/>' \
+            '<EMPCITY/>' \
+            '<EMPSTATE>TX</EMPSTATE>' \
+            '<EMPZIP>75149</EMPZIP>' \
+            '<EMPPHONE>(802)532-1400</EMPPHONE>' \
+            '<EMPPHONEEXT/>' \
+            '<HIREDATE>2018-08-22</HIREDATE>' \
+            '<EMPTYPE>S</EMPTYPE>' \
+            '<JOBTITLE>Unknown</JOBTITLE>' \
+            '<PAYFREQUENCY>S</PAYFREQUENCY>' \
+            '<NETMONTHLY>1700</NETMONTHLY>' \
+            '<LASTPAYDATE>2021-01-01</LASTPAYDATE>' \
+            '<NEXTPAYDATE>2019-08-30</NEXTPAYDATE>' \
+            '<SECONDPAYDATE>2019-09-13</SECONDPAYDATE>' \
+        '</EMPLOYMENT>' \
+        '<BANK>' \
+            '<BANKNAME>JPMORGAN CHASE BANK</BANKNAME>' \
+            '<BANKPHONE>(111)111-1111</BANKPHONE>' \
+            '<ACCOUNTTYPE>C</ACCOUNTTYPE>' \
+            '<ROUTINGNUMBER>556564542</ROUTINGNUMBER>' \
+            '<ACCOUNTNUMBER>565645755</ACCOUNTNUMBER>' \
+            '<BANKMONTHS>0</BANKMONTHS>' \
+            '<BANKYEARS>1</BANKYEARS>' \
+        '</BANK>' \
+        '<REFERENCES/>' \
+    '</CUSTOMER>' \
+'</REQUEST>' \
+
+    num =''.join(random.sample('123456789',9))
+    EMAIL= num +'@sztus.com'
+    EMAILNEW = data.replace('soho5355547@sztus.com',EMAIL)
+    HOMEPHONE =EMAILNEW.replace('8021254511',num)
+    OTHERPHONE=HOMEPHONE.replace('8026512251',num)
+    ROUTINGNUMBER=OTHERPHONE.replace('556564542',num)
+    data=ROUTINGNUMBER.replace('565645755',num)
+
+    resp = requests.post(url=url, data=data)
+    print(resp.text)
+
+def AcceptLeads(index,portfolioId,leadProviderId,fieldValue):
+
+    PortfolioPath = '/lead-provider/replace-lead-provider-parameter'
+    GlobalPath = '/filter-parameter/replace-lead-filter-parameter'
+    AcceptPath = [PortfolioPath, GlobalPath]
+    url = 'http://FRAMEWORK-GATEWAY-SERVER-DEV-V3-2.us-west-1.elasticbeanstalk.com:8910/filtration-restapi/v3' + AcceptPath[index]
+    requestbody = {
+        "entityData": {
+            "fieldKey": "IS_ACCEPT_LEAD",
+            "fieldValue": fieldValue,
+            "portfolioId": portfolioId,
+            "leadProviderId": leadProviderId
+        },
+        "operationInfo": {
+            "operatedBy": {
+                "fullName": "Soho He",
+                "email": "soho@sztus.com"
+            },
+
+            "before": {
+                "portfolioId": portfolioId,
+                "fieldKey": "IS_ACCEPT_LEAD",
+                "leadProviderId": leadProviderId,
+                "fieldValue": "0"
+            }
+        }
+    }
+    resp = requests.post(url=url, data=json.dumps(requestbody))
+    message =resp.text
+    print(message)
+    if "Success" in message:
+        print('--------------------Accept Lead Today---------------------')
+
+def Calendar(index,portfolioId,leadProviderId):
+
+    portfolioCalendar = '/replace-lead-filter-parameter'
+    providerCalendar = '/replace-lead-provider-parameter'
+    CalendarPath = [providerCalendar, portfolioCalendar]
+    url = 'http://station-bamboo-dev-v3-2.us-west-1.elasticbeanstalk.com:8010/api/bamboo'+CalendarPath[index]
+
+    data = {"entityData":{"fieldKey":"WORK_CALENDAR","fieldValue":
+        [{"CAPACITY":"100000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":6,"IS_ACCEPT_LEAD":1},
+         {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":2,"IS_ACCEPT_LEAD":1},
+         {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":3,"IS_ACCEPT_LEAD":1},
+         {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":4,"IS_ACCEPT_LEAD":1},
+         {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":5,"IS_ACCEPT_LEAD":1},
+         {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":7,"IS_ACCEPT_LEAD":1},
+         {"BEGIN_HOUR":"0","BEGIN_MINUTE":"0","END_HOUR":"23","END_MINUTE":"59","CAPACITY":"1000","IS_ACCEPT_LEAD":1,"DAY_OF_WEEK":1}],
+                          "portfolioId":portfolioId,"leadProviderId":leadProviderId},"operationInfo":{"operatedBy":{"fullName":"Soho ","id":8,"email":"soho@sztus.com"},
+         "before":{"portfolioId":8,"fieldKey":"WORK_CALENDAR","id":309,"leadProviderId":3,"fieldValue":
+         [{"CAPACITY":"100000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":6,"IS_ACCEPT_LEAD":1},
+          {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":2,"IS_ACCEPT_LEAD":1},
+          {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":3,"IS_ACCEPT_LEAD":1},
+          {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":4,"IS_ACCEPT_LEAD":1},
+          {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":5,"IS_ACCEPT_LEAD":1},
+          {"CAPACITY":"10000","END_HOUR":"23","BEGIN_MINUTE":"0","BEGIN_HOUR":"0","END_MINUTE":"59","DAY_OF_WEEK":7,"IS_ACCEPT_LEAD":1},
+          {"BEGIN_HOUR":"0","BEGIN_MINUTE":"0","END_HOUR":"23","END_MINUTE":"59","CAPACITY":"1000","IS_ACCEPT_LEAD":1,"DAY_OF_WEEK":1}]}}}
+
+    resp =requests.post(url = url, data = json.dumps(data))
+    message =resp.text
+    print(message)
+    if "Success" in message:
+        print('--------------------Add Calendar Filter Success---------------------')
+
+
+def AddOperator(operator,filterType,portfolioId,sectionKey,fieldKey,fieldValue):
+
+#FilterType =101 (hard filter)    leadFilterType =103 (soft filter)
+#sectionKey = [REFERRAL,PERSONAL,EMPLOYMENT,BANK]
+#fieldKey= [SSN,STATE,CITY,HOMEPHONE,EMAIL,AGE,ROUTINGNUMBER,ACCOUNTNUMBER]
+#operator=[EQ,NEQ,LT,LTEQ,GT,GTEQ,IN,NIN,CT,NCT,BW,NBW,EW,NEW,LENGTHEQ]
+
+    url = 'http://FRAMEWORK-GATEWAY-SERVER-DEV-V3-2.us-west-1.elasticbeanstalk.com:8910/filtration-restapi/v3/filter-parameter/replace-lead-filter-setting'
+    data = {"entityData":{"leadFilterType":filterType,"operator":operator,"portfolioId":portfolioId,"leadProviderId":-1,"sectionKey":"PERSONAL","fieldKey":"SSN","fieldValue":fieldValue},
+            "operationInfo":{"operatedBy":{"fullName":"Soho ","email":"soho@sztus.com"},"before":'null',
+            "after":{"leadFilterType":filterType,"operator":operator,"portfolioId":portfolioId,"leadProviderId":-1,"sectionKey":sectionKey,"fieldKey":fieldKey,"fieldValue":fieldValue},
+             "description":"Soho add Lead Filter Setting","settingType":1}}
+    resp =requests.post(url=url, data =json.dumps(data))
+    message =resp.text
+    print(message)
+    if "Success" in message:
+        print('--------------------Add Operator Success---------------------')
+
+
+def HistoryFilter(fieldKey,fieldValue,portfolioId):
+
+#fieldKey=[Positive Withdrawn Days,Negative Withdrawn Days,HARD_RETURN_DAYS,Hard Return Rate,Soft Return Rate,Returning Days,3rd Originate Days,3rd Positive Days,
+# Agent Review Days,Minimum D/C Ratio,Minimum Available Amount,Minimum Repaid Amount,INDEPENDENT]
+# INDEPENDENT  fieldValue=1(打开)  fieldValue=0(关闭)
+    url ='http://FRAMEWORK-GATEWAY-SERVER-DEV-V3-2.us-west-1.elasticbeanstalk.com:8910/filtration-restapi/v3/filter-parameter/replace-lead-filter-parameter'
+    data ={"entityData":{"id":"","fieldKey":fieldKey,"fieldValue":fieldValue,"portfolioId":portfolioId},
+           "operationInfo":{"operatedBy":{"fullName":"Soho ","email":"test@sztus.com"},"before":""}}
+    resp =requests.post(url=url, data =json.dumps(data))
+    message =resp.text
+    print(message)
+    if "Success" in message:
+        print('--------------------Add History Filter Success---------------------')
+
+if __name__=='__main__':
+    #AcceptLeads(1,3,1,1)
+    Calendar(1, 8, 1)
+    #AddOperator('EQ',101,8,'PERSONAL','SSN',568952512)
+    #HistoryFilter('HARD_RETURN_DAYS',7,8)
+    #Sendleads(8)
+
+
